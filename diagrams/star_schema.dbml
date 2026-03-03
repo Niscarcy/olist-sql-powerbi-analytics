@@ -1,0 +1,47 @@
+Table fact_sales{
+  fact_sales_id int [pk]
+  order_id varchar
+  customer_id varchar [not null]
+  product_id varchar [not null]
+  seller_id varchar [not null]
+  date_key date [not null]
+  status_id int [not null]
+  price decimal
+  freight_value decimal
+}
+Table dim_customers {
+customer_id varchar [pk]
+customer_unique_id varchar
+customer_city varchar
+customer_state varchar
+}
+Table dim_products {
+  product_id varchar [pk]
+  product_category_name_english varchar
+  product_weight_g int
+  product_length_cm int
+  product_height_cm int
+  product_width_cm int
+}
+Table dim_sellers {
+  seller_id varchar [pk]
+  seller_city varchar
+  seller_state varchar
+}
+Table dim_date {
+  date_key date [pk]
+  year int
+  month int
+  month_name varchar
+  quarter int
+  day_of_week varchar
+}
+Table dim_order_status {
+  status_id int [pk]
+  status_group varchar   // Completed, In Progress, Canceled
+}
+Ref: fact_sales.customer_id > dim_customers.customer_id
+Ref: fact_sales.product_id > dim_products.product_id
+Ref: fact_sales.seller_id > dim_sellers.seller_id
+Ref: fact_sales.date_key > dim_date.date_key
+Ref: fact_sales.status_id > dim_order_status.status_id

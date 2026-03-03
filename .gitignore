@@ -1,0 +1,15 @@
+# Ignore raw data
+data/raw/
+
+# Ignore CSV files
+*.csv
+
+# Ignore zip files
+*.zip
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore Word files
+*.docx
