@@ -50,6 +50,18 @@ CREATE TABLE raw.reviews (
     review_answer_timestamp TIMESTAMP
 );
 
+CREATE TABLE raw.reviews (
+    review_id VARCHAR,
+    order_id VARCHAR,
+    review_score INTEGER,
+    review_comment_title TEXT,
+    review_comment_message TEXT,
+    review_creation_date TIMESTAMP,
+    review_answer_timestamp TIMESTAMP,
+    PRIMARY KEY (review_id, order_id)
+);
+
+
 CREATE TABLE raw.products (
     product_id VARCHAR PRIMARY KEY,
     product_category_name VARCHAR,
