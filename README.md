@@ -64,6 +64,25 @@ https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
 
 ---
 
+## SQL Exploratory Analysis
+
+The project includes an exploratory analysis of the Olist dataset using PostgreSQL.
+
+Key analyses performed:
+
+- Dataset overview and table sizes
+- Order status distribution
+- Payment method analysis
+- Product category performance
+- Customer geographic distribution
+- Review score distribution
+- Delivery time analysis
+- Revenue by category
+- Monthly revenue trends
+- Average order value (AOV)
+
+All queries are documented in: sql/02_data_exploration.sql
+
 ## Project Status
 
 Project in progress.
@@ -73,10 +92,10 @@ Current progress:
 - Data ingestion
 - Data cleaning
 - PostgreSQL database setup
+- SQL Exploratory Analysis
 
 Next steps:
 
-- SQL exploratory analysis
 - Data modeling
 - Power BI dashboard
 
