@@ -72,22 +72,6 @@ GROUP BY product_category_name
 ORDER BY total_products DESC
 LIMIT 10;
 
-
--- REVENUE BY PRODUCT CATEGORY
-
-SELECT 
-    ct.product_category_name_english AS category,
-    SUM(oi.price) AS revenue
-FROM raw.order_items oi
-JOIN raw.products p
-    ON oi.product_id = p.product_id
-LEFT JOIN raw.category_translation ct
-    ON p.product_category_name = ct.product_category_name
-GROUP BY category
-ORDER BY revenue DESC
-LIMIT 10;
-
-
 -- =====================================================
 -- 5. REVIEW ANALYSIS
 -- =====================================================
@@ -108,25 +92,8 @@ SELECT
     AVG(review_score) AS average_review_score
 FROM raw.reviews;
 
-
 -- =====================================================
--- 6. SELLER PERFORMANCE
--- =====================================================
-
--- TOP SELLERS BY REVENUE
-
-SELECT 
-    seller_id,
-    COUNT(*) AS total_items_sold,
-    SUM(price) AS revenue
-FROM raw.order_items
-GROUP BY seller_id
-ORDER BY revenue DESC
-LIMIT 10;
-
-
--- =====================================================
--- 7. CUSTOMER GEOGRAPHY
+-- 6. CUSTOMER GEOGRAPHY
 -- =====================================================
 
 SELECT 
@@ -138,7 +105,7 @@ ORDER BY total_customers DESC;
 
 
 -- =====================================================
--- 8. DELIVERY PERFORMANCE
+-- 7. DELIVERY PERFORMANCE
 -- =====================================================
 
 -- AVERAGE DELIVERY TIME
@@ -166,44 +133,3 @@ GROUP BY r.review_score
 ORDER BY r.review_score;
 
 
--- =====================================================
--- 9. BUSINESS METRICS
--- =====================================================
-
--- AVERAGE ORDER VALUE (AOV)
-
-SELECT 
-    COUNT(DISTINCT oi.order_id) AS total_orders,
-    ROUND(SUM(oi.price),2) AS total_revenue,
-    ROUND(SUM(oi.price) / COUNT(DISTINCT oi.order_id),2) AS avg_order_value
-FROM raw.order_items oi;
-
-
--- MONTHLY REVENUE TREND
-
-SELECT 
-    DATE_TRUNC('month', o.order_purchase_timestamp) AS month,
-    COUNT(DISTINCT o.order_id) AS total_orders,
-    ROUND(SUM(oi.price),2) AS revenue
-FROM raw.orders o
-JOIN raw.order_items oi
-    ON o.order_id = oi.order_id
-WHERE o.order_status = 'delivered'
-GROUP BY month
-ORDER BY month;
-
-
--- REVENUE BY CUSTOMER STATE
-
-SELECT 
-    c.customer_state,
-    COUNT(DISTINCT o.order_id) AS total_orders,
-    ROUND(SUM(oi.price),2) AS revenue
-FROM raw.orders o
-JOIN raw.order_items oi
-    ON o.order_id = oi.order_id
-JOIN raw.customers c
-    ON o.customer_id = c.customer_id
-WHERE o.order_status = 'delivered'
-GROUP BY c.customer_state
-ORDER BY revenue DESC;
