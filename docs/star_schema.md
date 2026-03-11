@@ -1,0 +1,144 @@
+# Star Schema Design
+
+This project implements a **Star Schema** to structure the analytical layer of the data warehouse.  
+The goal is to organize transactional e-commerce data in a way that enables efficient querying, clear business analysis, and seamless integration with Business Intelligence tools such as **Power BI**.
+
+---
+
+# What is a Fact Table?
+
+A **fact table** stores the measurable events of a business process.
+
+In this project, the fact table is:
+
+`fact_sales`
+
+Each row represents **a single item sold in an order**.
+
+The fact table contains:
+
+- Foreign keys that link to dimension tables
+- Numerical metrics used for analysis
+
+Main metrics stored:
+
+- `price`
+- `freight_value`
+- `total_sale_value`
+
+Example structure:
+
+| Column | Description |
+|------|-------------|
+| order_id | Order identifier |
+| customer_id | Customer who placed the order |
+| product_id | Product sold |
+| seller_id | Seller responsible for the sale |
+| date_key | Purchase date |
+| status_id | Order status |
+| price | Product price |
+| freight_value | Shipping cost |
+| total_sale_value | Total revenue from the item |
+
+The **grain** of the fact table is defined as:
+
+> One row per item sold in an order.
+
+---
+
+# What is a Dimension Table?
+
+Dimension tables store **descriptive attributes** that provide context for the facts.
+
+They allow analysts to answer questions such as:
+
+- Who bought the product?
+- When did the purchase occur?
+- Which product category generated the most revenue?
+- Which sellers perform best?
+
+The dimension tables used in this project include:
+
+- `dim_customers`
+- `dim_products`
+- `dim_sellers`
+- `dim_date`
+- `dim_order_status`
+
+Example:
+
+`dim_products` contains descriptive information about products such as category and other attributes.
+
+Dimension tables make it possible to **slice and filter the data across different perspectives**.
+
+---
+
+# Why a Star Schema?
+
+The **Star Schema** is one of the most widely used data models in analytics and business intelligence.
+
+It was chosen for several reasons:
+
+### Simplicity
+The structure is easy to understand
+
+
+This makes the model intuitive for analysts and BI tools.
+
+### Query Performance
+Star schemas reduce the number of joins required in analytical queries, improving performance.
+
+### Scalability
+New dimensions or metrics can be added without redesigning the entire data model.
+
+### BI Tool Compatibility
+Most BI tools (Power BI, Tableau, Looker) are optimized to work with star schema models.
+
+---
+
+# Star Schema Structure in this Project
+
+The model centers around the `fact_sales` table.
+
+
+Each dimension connects to the fact table through foreign keys.
+
+---
+
+# Integration with Power BI
+
+The star schema is designed to serve as the **semantic layer for Power BI dashboards**.
+
+Power BI connects directly to the PostgreSQL database and reads the analytics schema.
+
+The workflow is:
+
+Raw Data
+↓
+Data Cleaning
+↓
+Star Schema (Fact + Dimensions)
+↓
+Analytics Views
+↓
+
+
+Power BI can then:
+
+- Build relationships automatically
+- Create measures and KPIs
+- Generate visual dashboards for business insights
+
+Because the data model is already optimized for analytics, Power BI can focus on **visualization and exploration rather than heavy data transformations**.
+
+---
+
+# Key Benefits of This Design
+
+- Clean analytical structure
+- Clear separation between facts and dimensions
+- Optimized performance for BI queries
+- Easy integration with visualization tools
+- Scalable architecture for future analytics
+
+This approach follows **industry best practices for data warehousing and business intelligence projects**.
