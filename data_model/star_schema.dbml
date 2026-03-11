@@ -1,5 +1,5 @@
 Table fact_sales{
-  fact_sales_id int [pk]
+  fact_sales_id bigserial [pk]
   order_id varchar
   customer_id varchar [not null]
   product_id varchar [not null]
@@ -8,6 +8,7 @@ Table fact_sales{
   status_id int [not null]
   price decimal
   freight_value decimal
+  total_sale_value decimal
 }
 Table dim_customers {
 customer_id varchar [pk]
