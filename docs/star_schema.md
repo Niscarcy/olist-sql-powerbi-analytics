@@ -50,7 +50,7 @@ The **grain** of the fact table is defined as:
 
 Dimension tables store **descriptive attributes** that provide context for the facts.
 
-They allow analysts to answer questions such as:
+They allow us to answer questions such as:
 
 - Who bought the product?
 - When did the purchase occur?
