@@ -113,6 +113,7 @@ CREATE TABLE analytics.fact_sales (
 
 );
 
+
 -- =========================================
 -- LOAD DIMENSION TABLES
 -- =========================================
@@ -147,7 +148,6 @@ SELECT DISTINCT
     seller_state
 FROM raw.sellers;
 
-
 INSERT INTO analytics.dim_date
 SELECT DISTINCT
     order_purchase_timestamp::date AS date_key,
@@ -158,6 +158,26 @@ SELECT DISTINCT
     TO_CHAR(order_purchase_timestamp,'Day')
 FROM raw.orders;
 
+-- CREATE CALENDAR FOR DATES WITHOUT SALES
+
+INSERT INTO analytics.dim_date
+SELECT
+    d::date AS date_key,
+    EXTRACT(YEAR FROM d) AS year,
+    EXTRACT(MONTH FROM d) AS month,
+    TO_CHAR(d,'FMMonth') AS month_name,
+    EXTRACT(QUARTER FROM d) AS quarter,
+    TO_CHAR(d,'FMDay') AS day_of_week
+FROM generate_series(
+    (SELECT MIN(order_purchase_timestamp)::date FROM raw.orders),
+    (SELECT MAX(order_purchase_timestamp)::date FROM raw.orders),
+    interval '1 day'
+) d
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM analytics.dim_date dd
+    WHERE dd.date_key = d::date
+);
 
 
 -- =========================================
@@ -315,6 +335,17 @@ SELECT order_id, product_id, COUNT(*) AS duplicates
 FROM analytics.fact_sales
 GROUP BY order_id, product_id
 HAVING COUNT(*) > 1;
+
+-- =========================================
+-- VERIFY ALL DAYS IN DIM_DATE
+-- =========================================
+
+SELECT
+    MIN(date_key),
+    MAX(date_key),
+    COUNT(*),
+    MAX(date_key) - MIN(date_key) + 1 AS expected_days
+FROM analytics.dim_date;
 
 -- =========================================
 -- END OF STAR SCHEMA CREATION

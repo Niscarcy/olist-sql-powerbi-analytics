@@ -109,3 +109,7 @@ COPY raw.category_translation
 FROM 'data/raw/product_category_name_translation.csv'
 DELIMITER ','
 CSV HEADER;
+
+-- =========================================
+-- END OF LOAD RAW DATA
+-- =========================================

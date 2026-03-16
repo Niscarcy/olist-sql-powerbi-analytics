@@ -93,3 +93,7 @@ CREATE TABLE raw.category_translation (
     product_category_name VARCHAR PRIMARY KEY,
     product_category_name_english VARCHAR
 );
+
+-- =========================================
+-- END OF SCHEMA SETUP
+-- =========================================

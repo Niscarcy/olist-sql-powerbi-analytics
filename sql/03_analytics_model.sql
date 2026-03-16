@@ -119,3 +119,7 @@ LEFT JOIN raw.category_translation ct
     ON p.product_category_name = ct.product_category_name
 GROUP BY category
 ORDER BY total_items_sold DESC;
+
+-- =========================================
+-- END OF ANALYTICS MODEL
+-- =========================================

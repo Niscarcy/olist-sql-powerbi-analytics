@@ -133,3 +133,7 @@ GROUP BY r.review_score
 ORDER BY r.review_score;
 
 
+-- =========================================
+-- END OF DATA EXPLORATION
+-- =========================================
+
